@@ -10,7 +10,7 @@ use ArrayAccess,
     Zend\Http\PhpEnvironment\Response,
     Zend\Mvc\Application,
     Zend\Mvc\MvcEvent,
-    Zend\View\Renderer;
+Zend\View\Renderer;
 
 class Listener implements ListenerAggregate
 {

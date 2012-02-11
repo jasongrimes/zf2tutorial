@@ -2,6 +2,9 @@
 return array(
     'modules' => array(
         'Application',
+        'Album',
+        'DoctrineModule',
+        'DoctrineORMModule',
     ),
     'module_listener_options' => array( 
         'config_cache_enabled' => false,
