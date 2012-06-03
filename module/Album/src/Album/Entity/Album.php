@@ -44,7 +44,8 @@ class Album implements InputFilterAwareInterface
      * @param string $property
      * @return mixed
      */
-    public function __get($property) {
+    public function __get($property) 
+    {
         return $this->$property;
     }
 
@@ -54,7 +55,8 @@ class Album implements InputFilterAwareInterface
      * @param string $property
      * @param mixed $value
      */
-    public function __set($property, $value) {
+    public function __set($property, $value) 
+    {
         $this->$property = $value;
     }
 
@@ -63,7 +65,8 @@ class Album implements InputFilterAwareInterface
      *
      * @return array
      */
-    public function getArrayCopy() {
+    public function getArrayCopy() 
+    {
         return get_object_vars($this);
     }
 
@@ -72,7 +75,8 @@ class Album implements InputFilterAwareInterface
      *
      * @param array $data
      */
-    public function populate($data = array()) {
+    public function populate($data = array()) 
+    {
         $this->id = $data['id'];
         $this->artist = $data['artist'];
         $this->title = $data['title'];
@@ -140,7 +144,5 @@ class Album implements InputFilterAwareInterface
         }
 
         return $this->inputFilter;
-    }
-
-
+    } 
 }
