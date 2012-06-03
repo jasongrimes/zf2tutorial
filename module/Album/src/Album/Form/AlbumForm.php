@@ -1,35 +1,50 @@
 <?php
 namespace Album\Form;
 
-use Zend\Form\Form,
-    Zend\Form\Element;
+use Zend\Form\Form;
 
 class AlbumForm extends Form
 {
-    public function init()
+    public function __construct()
     {
+        parent::__construct();
+
         $this->setName('album');
+        $this->setAttribute('method', 'post');
 
-        $id = new Element\Hidden('id');
-        $id->addFilter('Int');
+        // Id
+        $this->add(array(
+            'name' => 'id',
+            'attributes' => array(
+                'type'  => 'hidden',
+            ),
+        ));
 
-        $artist = new Element\Text('artist');
-        $artist->setLabel('Artist')
-            ->setRequired(true)
-            ->addFilter('StripTags')
-            ->addFilter('StringTrim')
-            ->addValidator('NotEmpty');
+        // Artist        
+        $this->add(array(
+            'name' => 'artist',
+            'attributes' => array(
+                'type'  => 'text',
+                'label' => 'Artist',
+            ),
+        ));
 
-        $title = new Element\Text('title');
-        $title->setLabel('Title')
-            ->setRequired(true)
-            ->addFilter('StripTags')
-            ->addFilter('StringTrim')
-            ->addValidator('NotEmpty');
+        $this->add(array(
+            'name' => 'title',
+            'attributes' => array(
+                'type'  => 'text',
+                'label' => 'Title',
+            ),
+        ));
 
-        $submit = new Element\Submit('submit');
-        $submit->setAttrib('id', 'submitbutton');
+        $this->add(array(
+            'name' => 'submit',
+            'attributes' => array(
+                'type'  => 'submit',
+                'label' => 'Go',
+                'id' => 'submitbutton',
+            ),
+        ));
 
-        $this->addElements(array($id, $artist, $title, $submit));
     }
 }

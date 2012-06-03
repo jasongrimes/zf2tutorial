@@ -1,44 +1,45 @@
 <?php
-
 namespace Album;
 
 return array(
+
+    // Controllers in this module
+    'controller' => array(
+        'classes' => array(
+            'album/album' => 'Album\Controller\AlbumController'
+        ),
+    ),
+
+    // Routes for this module
+    'router' => array(
+        'routes' => array(
+            'album' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/album[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'album/album',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+        ),
+    ),    
+
+    // View setup for this module
+    'view_manager' => array(
+        'template_path_stack' => array(
+            'album' => __DIR__ . '/../view',
+        ),
+    ),
+
     'di' => array(
         'instance' => array(
-            'alias' => array(
-                'album' => 'Album\Controller\AlbumController',
-            ),
-            'Album\Controller\AlbumController' => array(
-                'parameters' => array(
-                    // 'albumTable' => 'Album\Model\AlbumTable',
-                    'em' => 'doctrine_em',
-                ),
-            ),
-            'Album\Model\AlbumTable' => array(
-                'parameters' => array(
-                    'config' => 'Zend\Db\Adapter\Mysqli',
-                ),
-            ),
-            'Zend\Db\Adapter\Mysqli' => array(
-                'parameters' => array(
-                    'config' => array(
-                        'host' => 'localhost',
-                        'username' => 'root',
-                        'password' => 'dev',
-                        'dbname' => 'zftutorial',
-                    ),
-                ),
-            ),
-            'Zend\View\PhpRenderer' => array(
-                'parameters' => array(
-                    'options'  => array(
-                        'script_paths' => array(
-                            'album' => __DIR__ . '/../views',
-                        ),
-                    ),
-                ),
-            ),
-            'orm_driver_chain' => array(
+           'orm_driver_chain' => array(
                 'parameters' => array(
                     'drivers' => array(
                         'Album' => array(
@@ -53,4 +54,5 @@ return array(
             ),
         ),
     ),
+
 );

@@ -2,27 +2,64 @@
 
 namespace Album\Model;
 
-use Zend\Db\Table\AbstractTable;
+use Zend\Db\TableGateway\AbstractTableGateway,
+    Zend\Db\Adapter\Adapter,
+    Zend\Db\ResultSet\ResultSet;
 
-class AlbumTable extends AbstractTable
+class AlbumTable extends AbstractTableGateway
 {
-    protected $_name = 'album';
+    protected $table ='album';
+    protected $tableName ='album';
+
+    public function __construct(Adapter $adapter)
+    {
+        $this->adapter = $adapter;
+        $this->resultSetPrototype = new ResultSet(new Album);
+
+        $this->initialize();
+    }
+
+    public function fetchAll()
+    {
+        $resultSet = $this->select();
+        return $resultSet;
+    }
 
     public function getAlbum($id)
     {
-        $id = (int) $id;
-        $row = $this->fetchRow('id = ' . $id);
+        $id  = (int) $id;
+        $rowset = $this->select(array('id' => $id));
+        $row = $rowset->current();
         if (!$row) {
-            throw new Exception("Could not find row $id");
+            throw new \Exception("Could not find row $id");
         }
-        return $row->toArray();
+        return $row;
+    }
+
+    public function saveAlbum(Album $album)
+    {
+        $data = array(
+            'artist' => $album->artist,
+            'title'  => $album->title,
+        );
+
+        $id = (int)$album->id;
+        if ($id == 0) {
+            $this->insert($data);
+        } else {
+            if ($this->getAlbum($id)) {
+                $this->update($data, array('id' => $id));
+            } else {
+                throw new \Exception('Form id does not exit');
+            }
+        }
     }
 
     public function addAlbum($artist, $title)
     {
         $data = array(
             'artist' => $artist,
-            'title' => $title,
+            'title'  => $title,
         );
         $this->insert($data);
     }
@@ -31,13 +68,14 @@ class AlbumTable extends AbstractTable
     {
         $data = array(
             'artist' => $artist,
-            'title' => $title,
+            'title'  => $title,
         );
-        $this->update($data, 'id = ' . (int) $id);
+        $this->update($data, array('id' => $id));
     }
 
     public function deleteAlbum($id)
     {
-        $this->delete('id =' . (int) $id);
+        $this->delete(array('id' => $id));
     }
+
 }

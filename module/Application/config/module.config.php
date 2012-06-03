@@ -1,55 +1,52 @@
 <?php
 return array(
-    'layout'                => 'layout/layout.phtml',
-    'display_exceptions'    => true,
-    'di'                    => array(
-        'instance' => array(
-            'alias' => array(
-                'index' => 'Application\Controller\IndexController',
-                'error' => 'Application\Controller\ErrorController',
-                'view'  => 'Zend\View\PhpRenderer',
-            ),
-            'Zend\Mvc\Controller\ActionController' => array(
-                'parameters' => array(
-                    'broker'       => 'Zend\Mvc\Controller\PluginBroker',
+    'router' => array(
+        'routes' => array(
+            'default' => array(
+                'type'    => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/[:controller[/:action]]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'index',
+                        'action'     => 'index',
+                    ),
                 ),
             ),
-            'Zend\View\PhpRenderer' => array(
-                'parameters' => array(
-                    'resolver' => 'Zend\View\TemplatePathStack',
-                    'options'  => array(
-                        'script_paths' => array(
-                            'application' => __DIR__ . '/../view',
-                        ),
+            'home' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/',
+                    'defaults' => array(
+                        'controller' => 'album/album',
+                        'action'     => 'index',
                     ),
                 ),
             ),
         ),
     ),
-    'routes' => array(
-        'default' => array(
-            'type'    => 'Zend\Mvc\Router\Http\Segment',
-            'options' => array(
-                'route'    => '/[:controller[/:action]]',
-                'constraints' => array(
-                    'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                ),
-                'defaults' => array(
-                    'controller' => 'index',
-                    'action'     => 'index',
-                ),
-            ),
+    'controller' => array(
+        'classes' => array(
+            'index' => 'Application\Controller\IndexController'
         ),
-        'home' => array(
-            'type' => 'Zend\Mvc\Router\Http\Literal',
-            'options' => array(
-                'route'    => '/',
-                'defaults' => array(
-                    'controller' => 'album',
-                    'action'     => 'index',
-                ),
-            ),
+    ),
+    'view_manager' => array(
+        'display_not_found_reason' => true,
+        'display_exceptions'       => true,
+        'doctype'                  => 'HTML5',
+        'not_found_template'       => 'error/404',
+        'exception_template'       => 'error/index',
+        'template_map' => array(
+            'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
+            'index/index'   => __DIR__ . '/../view/index/index.phtml',
+            'error/404'     => __DIR__ . '/../view/error/404.phtml',
+            'error/index'   => __DIR__ . '/../view/error/index.phtml',
+        ),
+        'template_path_stack' => array(
+            'application' => __DIR__ . '/../view',
         ),
     ),
 );

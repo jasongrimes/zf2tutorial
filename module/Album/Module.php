@@ -2,9 +2,10 @@
 
 namespace Album;
 
-use Zend\Module\Consumer\AutoloaderProvider;
+use Zend\Form\View\HelperLoader as FormHelperLoader;
+use Album\Model\AlbumTable;
 
-class Module implements AutoloaderProvider
+class Module
 {
     public function getAutoloaderConfig()
     {
@@ -22,6 +23,20 @@ class Module implements AutoloaderProvider
 
     public function getConfig()
     {
-            return include __DIR__ . '/config/module.config.php';
+        return include __DIR__ . '/config/module.config.php';
     }
+
+    public function getServiceConfiguration()
+    {
+        return array(
+            'factories' => array(
+                'album-table' =>  function($sm) {
+                    $dbAdapter = $sm->get('db-adapter');
+                    $table = new AlbumTable($dbAdapter);
+                    return $table;
+                },
+            ),
+        );
+    }
+
 }
