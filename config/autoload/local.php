@@ -17,4 +17,18 @@ return array(
         'username' => 'zf2tutorial',
         'password' => 'dev',
     ),
+    'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'params' => array(
+                    'host'     => 'localhost',
+                    'port'     => '3306',
+                    'user'     => 'root',
+                    'password' => 'dev',
+                    'dbname'   => 'zf2tutorial',
+                )
+            )
+        )
+    ),
 );

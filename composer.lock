@@ -4,12 +4,12 @@
         {
             "package": "doctrine/DoctrineModule",
             "version": "dev-master",
-            "source-reference": "75c8b178d6f34ceddd2d622f148671ce5d9ccb2b"
+            "source-reference": "3b6998e949a8ef0348ed15fb45da44116074dcd2"
         },
         {
             "package": "doctrine/DoctrineORMModule",
             "version": "dev-master",
-            "source-reference": "d71f07c62df65b8f03b086a8abf0a2493341284b"
+            "source-reference": "0.4.0"
         },
         {
             "package": "doctrine/common",
@@ -43,13 +43,7 @@
         {
             "package": "symfony/yaml",
             "version": "2.0.x-dev",
-            "source-reference": "7eb70264627e696aa7d2825a88d7cef053e8a302"
-        },
-        {
-            "package": "zendframework/zendframework",
-            "version": "dev-master",
-            "alias-pretty-version": "2.0.x-dev",
-            "alias-version": "2.0.9999999.9999999-dev"
+            "source-reference": "c123857e83b279a4a1300ef27cc8cc25d8ea84f9"
         },
         {
             "package": "zendframework/zendframework",
@@ -61,6 +55,12 @@
             "package": "zendframework/zendframework",
             "version": "dev-master",
             "source-reference": "cef2f9c90a9dc3fe3018b624ff9113666a397b73"
+        },
+        {
+            "package": "zendframework/zendframework",
+            "version": "dev-master",
+            "alias-pretty-version": "2.0.x-dev",
+            "alias-version": "2.0.9999999.9999999-dev"
         }
     ],
     "packages-dev": null,

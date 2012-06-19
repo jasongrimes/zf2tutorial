@@ -37,22 +37,20 @@ return array(
         ),
     ),
 
-    'di' => array(
-        'instance' => array(
-           'orm_driver_chain' => array(
-                'parameters' => array(
-                    'drivers' => array(
-                        'Album' => array(
-                            'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-                            'namespace' => __NAMESPACE__ . '\Entity',
-                            'paths' => array(
-                                __DIR__ . '/../src/' . __NAMESPACE__ . '/Entity'
-                            ),
-                        ),
-                    ),
-                ),
+    // Doctrine config
+    'doctrine' => array(
+        'driver' => array(
+            __NAMESPACE__ . '_driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
             ),
-        ),
-    ),
+            'orm_default' => array(
+                'drivers' => array(
+                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
+                )
+            )
+        )
+    )
 
 );
