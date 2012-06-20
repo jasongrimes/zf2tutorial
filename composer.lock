@@ -9,7 +9,7 @@
         {
             "package": "doctrine/DoctrineORMModule",
             "version": "dev-master",
-            "source-reference": "0.4.0"
+            "source-reference": "eddf538d717e54a0380e3834a2fc7e29282d1aaf"
         },
         {
             "package": "doctrine/common",
@@ -55,12 +55,6 @@
             "package": "zendframework/zendframework",
             "version": "dev-master",
             "source-reference": "cef2f9c90a9dc3fe3018b624ff9113666a397b73"
-        },
-        {
-            "package": "zendframework/zendframework",
-            "version": "dev-master",
-            "alias-pretty-version": "2.0.x-dev",
-            "alias-version": "2.0.9999999.9999999-dev"
         }
     ],
     "packages-dev": null,
