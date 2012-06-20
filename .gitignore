@@ -8,4 +8,6 @@ nbproject
 .settings
 /vendor
 tags
-*.local.php
+*local*.php
+composer.phar
+
