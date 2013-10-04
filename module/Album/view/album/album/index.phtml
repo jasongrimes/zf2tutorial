@@ -2,7 +2,7 @@
 $title = 'My albums';
 $this->headTitle($title);
 ?>
-<h1><?php echo $this->escape($title); ?></h1>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
 <p><a href="<?php echo $this->url('album', array('action'=>'add'));?>">
     Add new album</a></p>
 
@@ -12,10 +12,10 @@ $this->headTitle($title);
     <th>Artist</th>
     <th>&nbsp;</th>
 </tr>
-<?php foreach($albums as $album) : ?>
+<?php foreach($paginator as $album) : ?>
 <tr>
-    <td><?php echo $this->escape($album->title);?></td>
-    <td><?php echo $this->escape($album->artist);?></td>
+    <td><?php echo $this->escapeHtml($album->title);?></td>
+    <td><?php echo $this->escapeHtml($album->artist);?></td>
     <td>
         <a href="<?php echo $this->url('album',
             array('action'=>'edit', 'id' => $album->id));?>">Edit</a>
@@ -25,3 +25,7 @@ $this->headTitle($title);
 </tr>
 <?php endforeach; ?>
 </table>
+
+<?php
+echo $this->paginationControl($this->paginator, 'sliding', array('partial/paginator.phtml', 'Album'), array('route' => 'album'));
+?>
