@@ -4,7 +4,6 @@ namespace Album\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface; 
 
@@ -75,7 +74,7 @@ class Album implements InputFilterAwareInterface
      *
      * @param array $data
      */
-    public function populate($data = array()) 
+    public function exchangeArray($data = array()) 
     {
         $this->id = $data['id'];
         $this->artist = $data['artist'];
@@ -92,17 +91,15 @@ class Album implements InputFilterAwareInterface
         if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
 
-            $factory = new InputFactory();
-
-            $inputFilter->add($factory->createInput(array(
+            $inputFilter->add(array(
                 'name'       => 'id',
                 'required'   => true,
                 'filters' => array(
                     array('name'    => 'Int'),
                 ),
-            )));
+            ));
 
-            $inputFilter->add($factory->createInput(array(
+            $inputFilter->add(array(
                 'name'     => 'artist',
                 'required' => true,
                 'filters'  => array(
@@ -119,9 +116,9 @@ class Album implements InputFilterAwareInterface
                         ),
                     ),
                 ),
-            )));
+            ));
 
-            $inputFilter->add($factory->createInput(array(
+            $inputFilter->add(array(
                 'name'     => 'title',
                 'required' => true,
                 'filters'  => array(
@@ -138,7 +135,7 @@ class Album implements InputFilterAwareInterface
                         ),
                     ),
                 ),
-            )));
+            ));
 
             $this->inputFilter = $inputFilter;        
         }
