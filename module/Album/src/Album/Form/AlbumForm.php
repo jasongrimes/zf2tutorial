@@ -1,50 +1,41 @@
 <?php
+
 namespace Album\Form;
 
 use Zend\Form\Form;
 
 class AlbumForm extends Form
 {
-    public function __construct()
+    public function __construct($name = null)
     {
-        parent::__construct();
+        // we want to ignore the name passed
+        parent::__construct('album');
 
-        $this->setName('album');
-        $this->setAttribute('method', 'post');
-
-        // Id
         $this->add(array(
             'name' => 'id',
-            'attributes' => array(
-                'type'  => 'hidden',
-            ),
+            'type' => 'Hidden',
         ));
-
-        // Artist        
-        $this->add(array(
-            'name' => 'artist',
-            'attributes' => array(
-                'type'  => 'text',
-                'label' => 'Artist',
-            ),
-        ));
-
         $this->add(array(
             'name' => 'title',
-            'attributes' => array(
-                'type'  => 'text',
+            'type' => 'Text',
+            'options' => array(
                 'label' => 'Title',
             ),
         ));
-
+        $this->add(array(
+            'name' => 'artist',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'Artist',
+            ),
+        ));
         $this->add(array(
             'name' => 'submit',
+            'type' => 'Submit',
             'attributes' => array(
-                'type'  => 'submit',
-                'label' => 'Go',
+                'value' => 'Go',
                 'id' => 'submitbutton',
             ),
         ));
-
     }
 }

@@ -1,13 +1,13 @@
 <?php
-
+ 
 namespace Album\Entity;
-
+ 
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface; 
-
+ 
 /**
  * A music album.
  *
@@ -20,24 +20,24 @@ use Zend\InputFilter\InputFilterInterface;
 class Album implements InputFilterAwareInterface 
 {
     protected $inputFilter;
-
+ 
     /**
      * @ORM\Id
      * @ORM\Column(type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
+ 
     /**
      * @ORM\Column(type="string")
      */
     protected $artist;
-
+ 
     /**
      * @ORM\Column(type="string")
      */
     protected $title;
-
+ 
     /**
      * Magic getter to expose protected properties.
      *
@@ -48,7 +48,7 @@ class Album implements InputFilterAwareInterface
     {
         return $this->$property;
     }
-
+ 
     /**
      * Magic setter to save protected properties.
      *
@@ -59,7 +59,7 @@ class Album implements InputFilterAwareInterface
     {
         $this->$property = $value;
     }
-
+ 
     /**
      * Convert the object to an array.
      *
@@ -69,40 +69,38 @@ class Album implements InputFilterAwareInterface
     {
         return get_object_vars($this);
     }
-
+ 
     /**
      * Populate from an array.
      *
      * @param array $data
      */
-    public function populate($data = array()) 
+    public function exchangeArray ($data = array()) 
     {
         $this->id = $data['id'];
         $this->artist = $data['artist'];
         $this->title = $data['title'];
     }
-
+ 
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
         throw new \Exception("Not used");
     }
-
+ 
     public function getInputFilter()
     {
         if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
 
-            $factory = new InputFactory();
-
-            $inputFilter->add($factory->createInput(array(
-                'name'       => 'id',
-                'required'   => true,
-                'filters' => array(
-                    array('name'    => 'Int'),
+            $inputFilter->add(array(
+                'name'     => 'id',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
                 ),
-            )));
+            ));
 
-            $inputFilter->add($factory->createInput(array(
+            $inputFilter->add(array(
                 'name'     => 'artist',
                 'required' => true,
                 'filters'  => array(
@@ -119,9 +117,9 @@ class Album implements InputFilterAwareInterface
                         ),
                     ),
                 ),
-            )));
+            ));
 
-            $inputFilter->add($factory->createInput(array(
+            $inputFilter->add(array(
                 'name'     => 'title',
                 'required' => true,
                 'filters'  => array(
@@ -138,11 +136,11 @@ class Album implements InputFilterAwareInterface
                         ),
                     ),
                 ),
-            )));
+            ));
 
-            $this->inputFilter = $inputFilter;        
+            $this->inputFilter = $inputFilter;
         }
 
         return $this->inputFilter;
-    } 
+    }
 }

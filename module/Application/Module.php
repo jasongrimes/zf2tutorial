@@ -1,23 +1,24 @@
 <?php
+/**
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
 
 namespace Application;
 
-use Zend\Db\Adapter\Adapter as DbAdapter;
+use Zend\Mvc\ModuleRouteListener;
+use Zend\Mvc\MvcEvent;
 
 class Module
 {
-    public function getAutoloaderConfig()
+    public function onBootstrap(MvcEvent $e)
     {
-        return array(
-            'Zend\Loader\ClassMapAutoloader' => array(
-                __DIR__ . '/autoload_classmap.php',
-            ),
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
-        );
+        $eventManager        = $e->getApplication()->getEventManager();
+        $moduleRouteListener = new ModuleRouteListener();
+        $moduleRouteListener->attach($eventManager);
     }
 
     public function getConfig()
@@ -25,16 +26,13 @@ class Module
         return include __DIR__ . '/config/module.config.php';
     }
 
-    public function getServiceConfiguration()
+    public function getAutoloaderConfig()
     {
         return array(
-            'factories' => array(
-                'db-adapter' =>  function($sm) {
-                    $config = $sm->get('config');
-                    $config = $config['db'];
-                    $dbAdapter = new DbAdapter($config);
-                    return $dbAdapter;
-                },
+            'Zend\Loader\StandardAutoloader' => array(
+                'namespaces' => array(
+                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+                ),
             ),
         );
     }

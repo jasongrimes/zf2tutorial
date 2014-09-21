@@ -9,12 +9,10 @@
     "homepage": "http://framework.zend.com/",
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "dev-master#cef2f9c90a9dc3fe3018b624ff9113666a397b73",
-        "doctrine/DoctrineORMModule": "dev-master"
+        "zendframework/zendframework": "2.3.*",
+        "doctrine/doctrine-orm-module": "0.*"
     },
     "autoload": {
-        "psr-0": {
-            "Application": "module/Application/src"
-        }
+        "psr-0": { "Album": "module/Album/src/" }
     }
 }

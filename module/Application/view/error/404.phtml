@@ -1,4 +1,4 @@
-<h1>A 404 error occurred</h1>
+<h1><?php echo $this->translate('A 404 error occurred') ?></h1>
 <h2><?php echo $this->message ?></h2>
 
 <?php if (isset($this->reason) && $this->reason): ?>
@@ -7,19 +7,19 @@
 $reasonMessage= '';
 switch ($this->reason) {
     case 'error-controller-cannot-dispatch':
-        $reasonMessage = 'The requested controller was unable to dispatch the request.';
+        $reasonMessage = $this->translate('The requested controller was unable to dispatch the request.');
         break;
     case 'error-controller-not-found':
-        $reasonMessage = 'The requested controller could not be mapped to an existing controller class.';
+        $reasonMessage = $this->translate('The requested controller could not be mapped to an existing controller class.');
         break;
     case 'error-controller-invalid':
-        $reasonMessage = 'The requested controller was not dispatchable.';
+        $reasonMessage = $this->translate('The requested controller was not dispatchable.');
         break;
     case 'error-router-no-match':
-        $reasonMessage = 'The requested URL could not be matched by routing.';
+        $reasonMessage = $this->translate('The requested URL could not be matched by routing.');
         break;
     default:
-        $reasonMessage = 'We cannot determine at this time why a 404 was generated.';
+        $reasonMessage = $this->translate('We cannot determine at this time why a 404 was generated.');
         break;
 }
 ?>
@@ -31,30 +31,77 @@ switch ($this->reason) {
 <?php if (isset($this->controller) && $this->controller): ?>
 
 <dl>
-    <dt>Controller:</dt>
-    <dd><?php $this->escape($this->controller) ?>
+    <dt><?php echo $this->translate('Controller') ?>:</dt>
+    <dd><?php echo $this->escapeHtml($this->controller) ?>
 <?php
-if (isset($this->controller_class) 
+if (isset($this->controller_class)
     && $this->controller_class
     && $this->controller_class != $this->controller
 ) {
-    echo " (resolves to " . $this->escape($this->controller_class) . ")";
+    echo '(' . sprintf($this->translate('resolves to %s'), $this->escapeHtml($this->controller_class)) . ')';
 }
 ?>
 </dd>
+</dl>
 
 <?php endif ?>
 
-<?php if (isset($this->exception) && $this->exception): ?>
+<?php if (isset($this->display_exceptions) && $this->display_exceptions): ?>
 
-<h2>Exception:</h2>
+<?php if(isset($this->exception) && $this->exception instanceof Exception): ?>
+<hr/>
+<h2><?php echo $this->translate('Additional information') ?>:</h2>
+<h3><?php echo get_class($this->exception); ?></h3>
+<dl>
+    <dt><?php echo $this->translate('File') ?>:</dt>
+    <dd>
+        <pre class="prettyprint linenums"><?php echo $this->exception->getFile() ?>:<?php echo $this->exception->getLine() ?></pre>
+    </dd>
+    <dt><?php echo $this->translate('Message') ?>:</dt>
+    <dd>
+        <pre class="prettyprint linenums"><?php echo $this->exception->getMessage() ?></pre>
+    </dd>
+    <dt><?php echo $this->translate('Stack trace') ?>:</dt>
+    <dd>
+        <pre class="prettyprint linenums"><?php echo $this->exception->getTraceAsString() ?></pre>
+    </dd>
+</dl>
+<?php
+    $e = $this->exception->getPrevious();
+    if ($e) :
+?>
+<hr/>
+<h2><?php echo $this->translate('Previous exceptions') ?>:</h2>
+<ul class="unstyled">
+    <?php while($e) : ?>
+    <li>
+        <h3><?php echo get_class($e); ?></h3>
+        <dl>
+            <dt><?php echo $this->translate('File') ?>:</dt>
+            <dd>
+                <pre class="prettyprint linenums"><?php echo $e->getFile() ?>:<?php echo $e->getLine() ?></pre>
+            </dd>
+            <dt><?php echo $this->translate('Message') ?>:</dt>
+            <dd>
+                <pre class="prettyprint linenums"><?php echo $e->getMessage() ?></pre>
+            </dd>
+            <dt><?php echo $this->translate('Stack trace') ?>:</dt>
+            <dd>
+                <pre class="prettyprint linenums"><?php echo $e->getTraceAsString() ?></pre>
+            </dd>
+        </dl>
+    </li>
+    <?php
+        $e = $e->getPrevious();
+        endwhile;
+    ?>
+</ul>
+<?php endif; ?>
 
-<p><b><?php echo $this->escape($this->exception->getMessage()) ?></b></p>
+<?php else: ?>
 
-<h3>Stack trace</h3>
+<h3><?php echo $this->translate('No Exception available') ?></h3>
 
-<pre>
-<?php echo $this->exception->getTraceAsString() ?>
-</pre>
+<?php endif ?>
 
 <?php endif ?>
