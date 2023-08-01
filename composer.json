@@ -9,7 +9,7 @@
     "homepage": "http://framework.zend.com/",
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.3.*",
+        "zendframework/zendframework": "2.5.*",
         "doctrine/doctrine-orm-module": "0.*"
     },
     "autoload": {
